@@ -40,7 +40,10 @@
 (define-public (claim)
 	(begin
 		(asserts! (is-eq (some tx-sender) (var-get beneficiary)) err-beneficiary-only)
+
+		;; possible inspiration for on-chain poker, where the deck may be revealed after the hand is completed
 		(asserts! (>= block-height (var-get unlock-height)) err-unlock-height-not-reached)
+
 		(as-contract (stx-transfer? (stx-get-balance tx-sender) tx-sender (unwrap-panic (var-get beneficiary))))
 	)
 )
